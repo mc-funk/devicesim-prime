@@ -41,9 +41,9 @@ module.exports = function(grunt) {
             },
             views: {
                 expand: true,
-                cwd: "client/",
-                src: "templates",
-                "dest": "server/public/assets"
+                cwd: "client/templates",
+                src: "*",
+                "dest": "server/public/assets/templates"
             }
         }
     });

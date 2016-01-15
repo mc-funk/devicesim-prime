@@ -36,8 +36,20 @@ $(document).ready(function() {
 });
 
 function setHeight(){
-    var eHeight = $(".textArea").innerHeight();
-    $(".sidebar, .sidebar2").outerHeight(eHeight);
+    var greatest = 0;
+    var height= []
+
+    height.push($(".textArea").innerHeight());
+    height.push($(".sidebar").innerHeight());
+    height.push($(".sidebar2").innerHeight());
+
+    for (var i=0; i < 3; i++) {
+      if (height[i] > greatest) {
+        greatest = height[i]
+      }
+    }
+
+    $(".sidebar, .sidebar2, .textArea").outerHeight(greatest);
 }
 
 function displayGravatar() {

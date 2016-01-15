@@ -4,14 +4,16 @@ $(document).ready(function() {
         setHeight();
     });
 
-    $("#home".on("click", function() {
+    $("#home").on("click", function() {
+      console.log("Home");
       $.get("/assets/templates/start.html", function(data) {
           $(".textArea").html(data);
           setHeight();
       });
-    }))
+    })
 
     $("#create-device").on("click", function() {
+      console.log("Create Device");
         $.get("/assets/templates/create-device.html", function(data){
             $(".textArea").html(data);
             setHeight();
@@ -19,6 +21,7 @@ $(document).ready(function() {
     });
 
     $("#create-datasource").on("click", function() {
+      console.log("Create Datasource");
         $.get("/assets/templates/create-datasource.html", function(data){
             $(".textArea").html(data);
             setHeight();
@@ -26,6 +29,7 @@ $(document).ready(function() {
     });
 
     $("#write-data").on("click", function() {
+      console.log("Write Data");
         $.get("/assets/templates/write-data.html", function(data){
             $(".textArea").html(data);
             setHeight();
@@ -33,6 +37,7 @@ $(document).ready(function() {
     });
 
     $("#create-script").on("click", function() {
+      console.log("Create Script");
         $.get("/assets/scripts/script.html", function(data){
             $(".textArea").html(data);
             setHeight();

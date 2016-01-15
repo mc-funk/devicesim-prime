@@ -4,6 +4,13 @@ $(document).ready(function() {
         setHeight();
     });
 
+    $("#home".on("click", function() {
+      $.get("/assets/templates/start.html", function(data) {
+          $(".textArea").html(data);
+          setHeight();
+      });
+    }))
+
     $("#create-device").on("click", function() {
         $.get("/assets/templates/create-device.html", function(data){
             $(".textArea").html(data);
@@ -36,19 +43,21 @@ $(document).ready(function() {
 });
 
 function setHeight(){
+    console.log("setHeight()")
     var greatest = 0;
-    var height= []
+    var height = [];
 
     height.push($(".textArea").innerHeight());
     height.push($(".sidebar").innerHeight());
     height.push($(".sidebar2").innerHeight());
+    console.log(height);
 
     for (var i=0; i < 3; i++) {
       if (height[i] > greatest) {
-        greatest = height[i]
+        greatest = height[i];
       }
     }
-
+    console.log(greatest);
     $(".sidebar, .sidebar2, .textArea").outerHeight(greatest);
 }
 

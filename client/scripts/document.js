@@ -38,7 +38,7 @@ $(document).ready(function() {
 
     $("#create-script").on("click", function() {
       console.log("Create Script");
-        $.get("/assets/scripts/script.html", function(data){
+        $.get("/assets/templates/script.html", function(data){
             $(".textArea").html(data);
             setHeight();
         });

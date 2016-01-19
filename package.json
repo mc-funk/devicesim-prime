@@ -21,11 +21,14 @@
     "bootstrap": "^3.3.4",
     "co": "^4.6.0",
     "connect-mongo": "^1.1.0",
+    "cookie-parser": "^1.4.1",
     "express": "^4.12.3",
     "grunt": "^0.4.5",
     "grunt-contrib-copy": "^0.8.0",
     "grunt-contrib-uglify": "^0.9.1",
     "jquery": "^2.1.4",
-    "mongoose": "^4.3.6"
+    "methods": "^1.1.2",
+    "mongoose": "^4.3.6",
+    "path": "^0.12.7"
   }
 }

@@ -4,7 +4,9 @@ $(document).ready(function() {
     //TODO: on("click")s for submit buttons for CIK and Uauth entrie ids submitCik and submitUauth
     $('#submitCik').on("click", function(){
       console.log("submitCik");
-      updateAuthFields();
+      var cik = $("#cikInput").val();
+      console.log("cik: ", cik);
+      setCik(cik);
     });
 
     $('#submitUauth').on("click", function(){
@@ -18,6 +20,8 @@ $(document).ready(function() {
 
       setUauth(url, username, password);
     });
+
+
     //TODO: on("click")s for clear buttons for CIK and Uauth (and all) clearCik and clearUauth
     $('#clearUauth, #clearCik').on("click", function(){
       clearAuth();
@@ -48,6 +52,28 @@ $(document).ready(function() {
       },
       error: function(xhr, err){
         console.log("post error: ", err);
+      }
+    });
+  }
+
+  function setCik(cik){
+    $.ajax({
+      type: 'POST',
+      url: '/auth/cik',
+      data: {
+        "cik":cik
+      },
+      complete: function(){
+        console.log("CIK post call complete");
+      },
+      success: function(post){
+        console.log("CIK post call success: ", post);
+        //TODO: Use this information to update auth fields
+        //data.cik, data.uauth, data.url, data.authType
+        updateAuthFields();
+      },
+      error: function(xhr, err){
+        console.log("CIK post error: ", err);
       }
     });
   }

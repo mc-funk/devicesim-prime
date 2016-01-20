@@ -10,6 +10,7 @@ var cookieParser = require('cookie-parser');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 
+var authRoute = require('./authroute')
 //var hash = require("./gravatar");
 
 app.set('port', (process.env.PORT || 5000)); //Heroku sets env PORT to 5000
@@ -35,6 +36,7 @@ app.use(session({
   })
 }));
 
+app.use('/auth', authRoute);
 app.use('/*', function(request, response) {
     var file = request.params[0] || 'views/index.html';
     response.sendFile(path.join(__dirname, './public', file));
@@ -43,3 +45,5 @@ app.use('/*', function(request, response) {
 app.listen(app.get('port'), function() {
     console.log("App is running on port: ", app.get('port'));
 });
+
+module.exports = app;

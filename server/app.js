@@ -1,3 +1,4 @@
+var bodyParser = require('body-parser');
 var express = require('express');
 var app = express();
 var config = require('./config');
@@ -20,6 +21,8 @@ app.set('dbUrl', process.env.MONGOLAB_URI || config.db[app.settings.env]);
 mongoose.connect(app.get('dbUrl'));
 //...
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(session({
   secret: 'DkTv37Ls',
@@ -32,7 +35,7 @@ app.use(session({
   })
 }));
 
-app.get('/*', function(request, response) {
+app.use('/*', function(request, response) {
     var file = request.params[0] || 'views/index.html';
     response.sendFile(path.join(__dirname, './public', file));
 });

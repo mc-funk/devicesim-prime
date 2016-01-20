@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/mc-funk/prime_solo_nd_01",
   "dependencies": {
+    "body-parser": "^1.14.2",
     "bootstrap": "^3.3.4",
     "co": "^4.6.0",
     "connect-mongo": "^1.1.0",

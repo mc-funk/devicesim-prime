@@ -1,4 +1,1 @@
-Project Scope
--  Create resume website that improves upon existing navigation in mc-funk.github.io
--  Use Bootstrap
--  Use jQuery
+Device simulator application that allows uses to emulate a device writing to an Exosite dataport, whether as a one-off or a simulated pattern (script). 

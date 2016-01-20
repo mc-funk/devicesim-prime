@@ -20,13 +20,34 @@ router.post('/cik', function(req, res, next) {
   res.end("cik sent");
 });
 
-// router.post('/uid/', function(req, res, next) {
-//   req.session.authType = "uauth";
-//   req.session.uauth = req.body.uauth;
-//   req.session.url = req.body.url;
-//   console.log("params set for User Auth (Portals API): ", req.session.uauth, req.session,url);
-//   res.end("yes");
-// });
+router.post('/uauth', function(req, res, next) {
+  req.session.authType = "uauth";
+  req.session.uauth = req.body.uauth;
+  req.session.url = req.body.url;
+  console.log("params set for User Auth (Portals API): ", req.session.uauth, req.session.url);
+  res.end("uauth sent");
+});
+
+router.delete('/', function(req, res, next) {
+  req.session.authType = null;
+  req.session.uauth = null;
+  req.session.url = null;
+  req.session.cik = null;
+  res.end("all auth deleted");
+})
+
+router.delete('/cik', function(req, res, next) {
+  req.session.cik = null;
+  res.end("cik auth deleted");
+})
+
+router.delete('/uauth', function(req, res, next) {
+  req.session.authType = null;
+  req.session.uauth = null;
+  req.session.url = null;
+  req.session.cik = null;
+  res.end("uauth deleted");
+})
 
 console.log("auth routing loaded");
 module.exports = router;

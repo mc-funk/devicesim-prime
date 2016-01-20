@@ -4,7 +4,7 @@ $(document).ready(function() {
         setHeight();
     });
 
-    $("#home").on("click", function() {
+    $("#start-here").on("click", function() {
       console.log("Home");
       $.get("/assets/templates/start.html", function(data) {
           $(".textArea").html(data);

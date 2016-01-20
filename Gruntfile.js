@@ -14,7 +14,8 @@ module.exports = function(grunt) {
             //Define source and destination for uglified code
             build: {
                 files : {
-                    'server/public/assets/scripts/document.min.js' : 'client/scripts/document.js'
+                    'server/public/assets/scripts/document.min.js' : 'client/scripts/document.js',
+                    'server/public/assets/scripts/getstarted.min.js' : 'client/scripts/get-started.js'
                 }
             }
         },
@@ -38,12 +39,6 @@ module.exports = function(grunt) {
                 cwd: "client/styles",
                 src: "stylesheet.css",
                 "dest": "server/public/assets/css"
-            },
-            views: {
-                expand: true,
-                cwd: "client/templates",
-                src: "*",
-                "dest": "server/public/assets/templates"
             }
         }
     });

@@ -12,12 +12,13 @@ router.get('/', function (req, res, next) {
   res.send(req.session);
 });
 
-// router.post('/cik/', function(req, res, next) {
-//   req.session.authType = "cik";
-//   req.session.cik = req.body.cik;
-//   console.log("params set: cik=", req.session.cik);
-//   res.end("yes");
-// });
+router.post('/cik', function(req, res, next) {
+  req.session.authType = "cik";
+  console.log(req.body)
+  req.session.cik = req.body.cik;
+  console.log("params set: cik=", req.session.cik);
+  res.end("cik sent");
+});
 
 // router.post('/uid/', function(req, res, next) {
 //   req.session.authType = "uauth";

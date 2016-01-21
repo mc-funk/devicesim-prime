@@ -14,7 +14,6 @@ router.get('/', function (req, res, next) {
   var data = rpc.tree(
     thisCik,
     {
-      depth: 5;
       visit: function (rid, type, depth) {
         console.log(rid + ' (' + type + ') depth:' + depth);
     },

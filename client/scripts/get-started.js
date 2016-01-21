@@ -28,7 +28,7 @@ $(document).ready(function() {
     });
 
   function setUauth(url, username, password){
-    //update fields to current uAuth and CIK settings
+    //update User/PW auth
     var userPasswordString = username + ":" + password;
     var uauth = btoa(userPasswordString);
     console.log("Auth", uauth);
@@ -96,7 +96,7 @@ $(document).ready(function() {
   }
 
   function updateAuthFields(){
-    //update fields to current uAuth and CIK settings
+    //update text fields to current uAuth and CIK settings
     $.ajax({
       type: 'GET',
       url: '/auth',
@@ -107,9 +107,37 @@ $(document).ready(function() {
         console.log("get call success: ", data);
         //TODO: Use this information to update auth fields
         //data.cik, data.uauth, data.url, data.authType
+        if (data.cik) {
+          $("#cikInput").val(data.cik);
+          displayCikInfo();
+        }
+        if (data.portalName) {
+          $("#cikStatus").text("Portal accessed: " + data.portalName);
+        }
       },
       error: function(xhr, err){
         console.log("get error: ", err);
+      }
+    });
+  }
+
+  function displayCikInfo(){
+    $.ajax({
+      type: 'GET',
+      url: '/rpc/info',
+      complete: function(){
+        console.log("get call complete");
+      },
+      success: function(data){
+        console.log("get call success: ", data);
+        //TODO: Use this information to update auth fields
+        //data.cik, data.uauth, data.url, data.authType
+        var portalName = data.description.name;
+        $("#cikStatus").text("Portal accessed: " + portalName);
+      },
+      error: function(xhr, err){
+        clearAuth();
+        $("#cikStatus").text("You have not entered a valid cik");
       }
     });
   }

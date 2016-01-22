@@ -4,7 +4,7 @@ var bodyParser = require('body-parser');
 var rpc = require('onep/rpc');
 var util = require('util');
 var cookieParser = require('cookie-parser');
-const session = require('express-session');
+// const session = require('express-session');
 
 //RPC CALL: rpc.caoo(auth, procedure, arguments, callback)
 //TODO: RPC call for get devices and their resources, store RIDs in DOM Data
@@ -38,16 +38,18 @@ router.get('/info', function (req, res, next) {
   rpc.call(thisCik, 'info', [{"alias": ""}, {}],
     function(err, rpcresponse, httpresponse) {
       if (err) {
-        console.log('error: ' + err);
+        console.log('INFO CALL ERR: ' + err);
       } else {
         console.log(rpcresponse)
         if (rpcresponse[0].status === 'ok') {
           console.log("result: ", rpcresponse[0].result);
           req.session.portalName = rpcresponse[0].result.description.name;
           console.log("portalName set:" + req.session.portalName);
-          return rpcresponse[0].result;
+          res.send(rpcresponse[0].result);
         } else {
           console.log('Bad status: ' + rpcresponse[0].status);
+          req.session.portalName = null;
+          res.send(err);
         }
       }
   });

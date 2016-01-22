@@ -1,6 +1,7 @@
 $(document).ready(function() {
     //TODO: get existing values for auth and CIK and drop them in the text boxes. =Call a function=
     updateAuthFields();
+
     //TODO: on("click")s for submit buttons for CIK and Uauth entrie ids submitCik and submitUauth
     $('#submitCik').on("click", function(){
       console.log("submitCik");
@@ -24,6 +25,8 @@ $(document).ready(function() {
 
     //TODO: on("click")s for clear buttons for CIK and Uauth (and all) clearCik and clearUauth
     $('#clearUauth, #clearCik').on("click", function(){
+      $("#cikStatus").html("<em>Enter a valid CIK to begin.</em>");
+      $("#cikInput").val("");
       clearAuth();
     });
 
@@ -87,7 +90,6 @@ $(document).ready(function() {
       },
       success: function(post){
         console.log("Delete successful: ", post);
-        updateAuthFields();
       },
       error: function(xhr, err){
         console.log("delete error: ", err);
@@ -112,7 +114,7 @@ $(document).ready(function() {
           displayCikInfo();
         }
         if (data.portalName) {
-          $("#cikStatus").text("Portal accessed: " + data.portalName);
+          $("#cikStatus").html("Portal accessed: " + data.portalName);
         }
       },
       error: function(xhr, err){
@@ -132,12 +134,19 @@ $(document).ready(function() {
         console.log("get call success: ", data);
         //TODO: Use this information to update auth fields
         //data.cik, data.uauth, data.url, data.authType
-        var portalName = data.description.name;
-        $("#cikStatus").text("Portal accessed: " + portalName);
+        if (data.description) {
+          var portalName = data.description.name;
+          $("#cikStatus").html("Portal accessed: " + portalName);
+        } else {
+          $("#cikStatus").html("<span class='warn-text'>Your CIK is not valid. Please correct and try again.</span>");
+          clearAuth();
+        };
       },
       error: function(xhr, err){
-        clearAuth();
-        $("#cikStatus").text("You have not entered a valid cik");
+        //Note: the RPC does not return an error for auth errors.
+        //It it returns success with the error code in it.
+        console.log("/rpc/info get call error: ", err)
+
       }
     });
   }

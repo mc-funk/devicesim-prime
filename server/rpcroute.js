@@ -39,6 +39,7 @@ router.get('/info', function (req, res, next) {
     function(err, rpcresponse, httpresponse) {
       if (err) {
         console.log('INFO CALL ERR: ' + err);
+        res.send(err);
       } else {
         console.log(rpcresponse)
         if (rpcresponse[0].status === 'ok') {
@@ -49,7 +50,6 @@ router.get('/info', function (req, res, next) {
         } else {
           console.log('Bad status: ' + rpcresponse[0].status);
           req.session.portalName = null;
-          res.send(err);
         }
       }
   });

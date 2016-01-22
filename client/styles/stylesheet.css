@@ -38,6 +38,11 @@ h5 {
 	color: #fda703;
 }
 
+.warn-text {
+	color: red;
+	font-style: italic;
+}
+
 p {
 	color: #2f2f2f;
 }

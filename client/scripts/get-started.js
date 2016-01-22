@@ -1,6 +1,12 @@
 $(document).ready(function() {
     //TODO: get existing values for auth and CIK and drop them in the text boxes. =Call a function=
     updateAuthFields();
+    $('#cikInput').keypress(function (e) {
+      if (e.which == 13) {
+        $('#submitCik').click();
+        return false;    //<---- Add this line
+      }
+    });
 
     //TODO: on("click")s for submit buttons for CIK and Uauth entrie ids submitCik and submitUauth
     $('#submitCik').on("click", function(){

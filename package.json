@@ -1,7 +1,7 @@
 {
-  "name": "prime_solo_nd_01",
+  "name": "exosite-device-simulator",
   "version": "1.0.0",
-  "description": "Solo project - \"All The Things\" ",
+  "description": "Device Simulator - Exosite OnePlatform",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/mc-funk/prime_solo_nd_01",
   "dependencies": {
+    "angular": "^1.4.9",
     "body-parser": "^1.14.2",
     "bootstrap": "^3.3.4",
     "co": "^4.6.0",

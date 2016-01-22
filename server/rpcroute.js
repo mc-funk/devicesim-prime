@@ -41,9 +41,8 @@ router.get('/info', function (req, res, next) {
         console.log('INFO CALL ERR: ' + err);
         res.send(err);
       } else {
-        console.log(rpcresponse)
         if (rpcresponse[0].status === 'ok') {
-          console.log("result: ", rpcresponse[0].result);
+          //console.log("result: ", rpcresponse[0].result);
           req.session.portalName = rpcresponse[0].result.description.name;
           console.log("portalName set:" + req.session.portalName);
           res.send(rpcresponse[0].result);

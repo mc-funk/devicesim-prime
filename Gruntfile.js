@@ -15,7 +15,8 @@ module.exports = function(grunt) {
             build: {
                 files : {
                     'server/public/assets/scripts/document.min.js' : 'client/scripts/document.js',
-                    'server/public/assets/scripts/getstarted.min.js' : 'client/scripts/get-started.js'
+                    'server/public/assets/scripts/getstarted.min.js' : 'client/scripts/get-started.js',
+                    'server/public/assets/scripts/devices.min.js' : 'client/scripts/devices.js'
                 }
             }
         },
@@ -28,9 +29,13 @@ module.exports = function(grunt) {
                 cwd: "node_modules",
                 src: [
                     "bootstrap/dist/css/bootstrap.min.css",
+                    "bootstrap/dist/css/bootstrap.min.css.map",
                     "bootstrap/dist/js/bootstrap.min.js",
                     "jquery/dist/jquery.min.js",
-                    "jquery/dist/jquery.min.map"
+                    "jquery/dist/jquery.min.map",
+                    "angular/angular.min.js",
+                    "angular/angular.min.js.map"
+
                 ],
                 "dest": "server/public/vendor"
             },

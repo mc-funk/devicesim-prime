@@ -12,9 +12,9 @@ $(document).ready(function() {
       });
     })
 
-    $("#create-device").on("click", function() {
-      console.log("Create Device");
-        $.get("/assets/templates/create-device.html", function(data){
+    $("#devices").on("click", function() {
+      console.log("Devices & Data");
+        $.get("/assets/templates/devices.html", function(data){
             $(".textArea").html(data);
             setHeight();
         });

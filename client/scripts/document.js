@@ -2,6 +2,7 @@ $(document).ready(function() {
     $.get("/assets/templates/start.html", function(data) {
         $(".textArea").html(data);
         setHeight();
+        $("#start-here a").addClass("currentNav");
     });
 
     $("#start-here").on("click", function() {
@@ -44,6 +45,10 @@ $(document).ready(function() {
         });
     });
 
+    $(".nav a").on("click", function() {
+      $(".currentNav").removeClass("currentNav");
+      $(this).addClass("currentNav");
+    });
 
 });
 

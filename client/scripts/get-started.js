@@ -1,6 +1,12 @@
 $(document).ready(function() {
     //TODO: get existing values for auth and CIK and drop them in the text boxes. =Call a function=
     updateAuthFields();
+
+    $(".nav a").on("click", function() {
+      $(".currentNav").removeClass("currentNav");
+      $(this).addClass("currentNav");
+    });
+
     $('#cikInput').keypress(function (e) {
       if (e.which == 13) {
         $('#submitCik').click();
@@ -16,23 +22,24 @@ $(document).ready(function() {
       setCik(cik);
     });
 
-    $('#submitUauth').on("click", function(){
-      console.log("submitUauth");
-      var uauthArray = $('#uauthForm').serializeArray();
-      console.log("uAuthArray: ", uauthArray);
-      var url = uauthArray[0]["value"];
-      var username = uauthArray[1]["value"];
-      var password = uauthArray[2]["value"];
-      console.log("url, username, pw", url, username, password);
-
-      setUauth(url, username, password);
-    });
+    // $('#submitUauth').on("click", function(){
+    //   console.log("submitUauth");
+    //   var uauthArray = $('#uauthForm').serializeArray();
+    //   console.log("uAuthArray: ", uauthArray);
+    //   var url = uauthArray[0]["value"];
+    //   var username = uauthArray[1]["value"];
+    //   var password = uauthArray[2]["value"];
+    //   console.log("url, username, pw", url, username, password);
+    //   $("#deviceTest").show();
+    //   setUauth(url, username, password);
+    // });
 
 
     //TODO: on("click")s for clear buttons for CIK and Uauth (and all) clearCik and clearUauth
     $('#clearUauth, #clearCik').on("click", function(){
       $("#cikStatus").html("<em>Enter a valid CIK to begin.</em>");
       $("#cikInput").val("");
+      $("#deviceTest").hide();
       clearAuth();
     });
 
@@ -141,10 +148,12 @@ $(document).ready(function() {
         //TODO: Use this information to update auth fields
         //data.cik, data.uauth, data.url, data.authType
         if (data.description) {
+          $(".deviceTest").show();
           var portalName = data.description.name;
           $("#cikStatus").html("Portal accessed: " + portalName);
         } else {
           $("#cikStatus").html("<span class='warn-text'>Your CIK is not valid. Please correct and try again.</span>");
+          $("#deviceTest").hide();
           clearAuth();
         };
       },

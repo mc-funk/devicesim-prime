@@ -9,13 +9,16 @@ app.controller("DeviceController", ['$scope', '$http', function($scope, $http) {
     //Create a function to retrieve cat information from server and redefine $scope.cats accordingly.
     function getDevices() {
         //We defined the .get('/cats') functionality in the server-side index.js!
-        console.log("getDevices got called at all");
+        //console.log("getDevices got called at all");
         return $http.get('/rpc').then(function(response){
             if(response.status !== 200) {
                 throw new Error('/rpc call from getDevices failed');
-            }
-            console.log("getDevices response: ", response)
+            } else if (!response.data.info) {
+                throw new Error('no valid auth provided');
+              }
 
+            //console.log("getDevices response: ", response)
+            $("#deviceTest").show();
             var children = response.data.children;
             var info = response.data.info;
 
@@ -36,13 +39,13 @@ app.controller("DeviceController", ['$scope', '$http', function($scope, $http) {
             console.log("scope.devices set to: ", children);
 
             function addAliases(children, info) {
-              console.log("getAliases called:", children, info);
+              //console.log("getAliases called:", children, info);
               /* info.aliases is an object with one property each for only the
               child resources that have aliases. The name of each property is
               the RID of the child resource. This logic checks for property by RID
               and grabs the alias. */
               for (var j=0; j< children.length; j++) {
-                console.log(children[j].rid,":", info.aliases[children[j].rid]);
+                //console.log(children[j].rid,":", info.aliases[children[j].rid]);
                 var tempAlias = info.aliases[children[j].rid];
                 if (tempAlias) {
                   children[j].name = tempAlias[0];

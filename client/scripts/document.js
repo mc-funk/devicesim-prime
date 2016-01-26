@@ -1,27 +1,27 @@
 $(document).ready(function() {
-    $.get("/assets/templates/start.html", function(data) {
-        $(".textArea").html(data);
-        setHeight();
-        $("#start-here a").addClass("currentNav");
-    });
+    // $.get("/assets/templates/start.html", function(data) {
+    //     $(".textArea").html(data);
+    //     setHeight();
+    //     $("#start-here a").addClass("currentNav");
+    // });
 
-    $("#start-here").on("click", function() {
-      console.log("Home");
-      $.get("/assets/templates/start.html", function(data) {
-          $(".textArea").outerHeight("auto");
-          $(".textArea").html(data);
-          setHeight();
-      });
-    })
+    // $("#start-here").on("click", function() {
+    //   console.log("Home");
+    //   $.get("/assets/templates/start.html", function(data) {
+    //       $(".textArea").outerHeight("auto");
+    //       $(".textArea").html(data);
+    //       setHeight();
+    //   });
+    // })
 
-    $("#devices").on("click", function() {
-      console.log("Devices & Data");
-        $.get("/assets/templates/devices.html", function(data){
-            $(".textArea").outerHeight("auto");
-            $(".textArea").html(data);
-            setHeight();
-        });
-    });
+    // $("#devices").on("click", function() {
+    //   console.log("Devices & Data");
+    //     $.get("/assets/templates/devices.html", function(data){
+    //         $(".textArea").outerHeight("auto");
+    //         $(".textArea").html(data);
+    //         setHeight();
+    //     });
+    // });
 
     $("#create-datasource").on("click", function() {
       console.log("Create Datasource");
@@ -74,8 +74,4 @@ function setHeight(){
     }
     console.log(greatest);
     $(".sidebar, .sidebar2, .textArea").outerHeight(greatest);
-}
-
-function displayGravatar() {
-    console.log("Will run function")
 }

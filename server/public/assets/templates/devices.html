@@ -2,6 +2,7 @@
 
 <div ng-controller="DeviceController">
   <h3>Devices in Your Portal</h3>
+  <button ng-click="getDevices()" class="btn btn-warning btn-small">Refresh</button>
   <ul>
     <li ng-repeat="device in devices">{{device.name}}</li>
   </ul>

@@ -8,6 +8,7 @@ $(document).ready(function() {
     $("#start-here").on("click", function() {
       console.log("Home");
       $.get("/assets/templates/start.html", function(data) {
+          $(".textArea").outerHeight("auto");
           $(".textArea").html(data);
           setHeight();
       });
@@ -16,6 +17,7 @@ $(document).ready(function() {
     $("#devices").on("click", function() {
       console.log("Devices & Data");
         $.get("/assets/templates/devices.html", function(data){
+            $(".textArea").outerHeight("auto");
             $(".textArea").html(data);
             setHeight();
         });
@@ -24,6 +26,7 @@ $(document).ready(function() {
     $("#create-datasource").on("click", function() {
       console.log("Create Datasource");
         $.get("/assets/templates/create-datasource.html", function(data){
+            $(".textArea").outerHeight("auto");
             $(".textArea").html(data);
             setHeight();
         });
@@ -32,14 +35,16 @@ $(document).ready(function() {
     $("#write-data").on("click", function() {
       console.log("Write Data");
         $.get("/assets/templates/write-data.html", function(data){
-            $(".textArea").html(data);
-            setHeight();
+          $(".textArea").outerHeight("auto");
+          $(".textArea").html(data);
+          setHeight();
         });
     });
 
     $("#create-script").on("click", function() {
       console.log("Create Script");
         $.get("/assets/templates/script.html", function(data){
+            $(".textArea").outerHeight("auto");
             $(".textArea").html(data);
             setHeight();
         });

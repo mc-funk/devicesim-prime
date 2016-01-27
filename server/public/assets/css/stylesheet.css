@@ -20,6 +20,13 @@ a {
 	color: #D5E04D;
 }
 
+.noHover a:hover {
+	text-decoration: none;
+}
+
+.clickable:hover {
+	background-color: #D5E04D;
+}
 
 h1 {
 	color: #41C4DC;

@@ -1,4 +1,5 @@
 var app=angular.module('app', []);
+
 console.log("devices.js loading");
 app.controller("DeviceController", ['$scope', '$http', function($scope, $http) {
     //Define a single cats and the set of cats (used in conj with ng-repeat in index.html)
@@ -7,6 +8,44 @@ app.controller("DeviceController", ['$scope', '$http', function($scope, $http) {
     $scope.childDevice = {};
     $scope.devices = [];
     //Create a function to retrieve cat information from server and redefine $scope.cats accordingly.
+    function deleteByRid(rid) {
+      console.log(rid);
+      var data = window.prompt("Enter the datapoint you would like to add below.");
+      if (data === null) {
+        console.log("CANCEL write for rid "+ rid);
+        return;
+      }
+      console.log("CONFIRM write for rid "+ rid +" data=" + data);
+      //DELETE CALL GOES HERE
+      return $http.put('rpc/resource/'+rid+"/"+data).then(function(response){
+          if(response.status !== 200) {
+              throw new Error('/rpc/resource put call from deleteByRid failed');
+          } else if (!response.data.info) {
+              throw new Error("RPC error: ", response.status);
+            }
+          console.log("resource put call successful for: "+rid);
+          });
+    }
+
+    function writeToDataport(DeviceRid, DataPortRid) {
+      var data = window.prompt("Enter the datapoint you would like to add below.");
+      if (data === null) {
+        console.log("CANCEL write for rid "+ DataPortRid);
+        return;
+      }
+      console.log("CONFIRM write for rid "+ DataPortRid +" data=" + data);
+      //DELETE CALL GOES HERE
+      return $http.put('rpc/resource/'+DeviceRid+"/"+DataPortRid+"/"+data).then(function(response){
+          if(response.status !== 200) {
+              throw new Error('/rpc/resource put call from deleteByRid failed');
+          } else if (!response.data.info) {
+              throw new Error("RPC error: ", response.status);
+            }
+          console.log("resource put call successful for: "+DataPortRid);
+          });
+    }
+
+
     function getDevices() {
         //We defined the .get('/cats') functionality in the server-side index.js!
         //console.log("getDevices got called at all");
@@ -22,16 +61,6 @@ app.controller("DeviceController", ['$scope', '$http', function($scope, $http) {
             var children = response.data.children;
             var info = response.data.info;
 
-            // var tempRid;
-            // for (var j=0; j< children.length; j++) {
-            //   console.log(children[j].rid,":", response.data.info.aliases[children[j].rid]);
-            //   tempRid = response.data.info.aliases[children[j].rid];
-            //   if (tempRid) {
-            //     children[j].name = response.data.info.aliases[children[j].rid][0];
-            //   } else {
-            //     children[j].name = "Unnamed resource";
-            //   }
-            // }
             children = addAliases(children, info);
 
             $scope.device = {};
@@ -64,7 +93,9 @@ app.controller("DeviceController", ['$scope', '$http', function($scope, $http) {
         });
     };
     getDevices();
+    $scope.deleteByRid=deleteByRid;
     $scope.getDevices=getDevices;
+    $scope.writeToDataport=writeToDataport;
 
     //Post information to the server, which will then update the server and database.
     // $scope.add = function(cat) {

@@ -45,7 +45,7 @@
             <button ng-click="getDevices()" class="btn btn-warning btn-small">Refresh</button>
             <ul>
                 <li  ng-attr-id="{{device.rid}}" ng-repeat="device in devices">{{device.name}}
-                  <span><button class="btn-xs btn-success btn" ng-show="device.type=='dataport'" ng-click="writeToDataport(device.rid, device.rid)">Quick Write</button>
+                  <span><button class="btn-xs btn-success btn" ng-show="device.type=='dataport'" ng-click="writeToDataport('portal', device.rid)">Quick Write</button>
                   <small>({{device.type}}, rid: {{device.rid}})</small></span>
                   <ul>
                     <li ng-repeat="child in device.children" ng-attr-id="{{child.rid}}" >{{child.name}}

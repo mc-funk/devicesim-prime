@@ -67,6 +67,8 @@ app.controller("DeviceController", ['$scope', '$http', function($scope, $http) {
             $scope.devices = children;
             console.log("scope.devices set to: ", children);
 
+            return response.data.children;
+
             function addAliases(children, info) {
               //console.log("getAliases called:", children, info);
               /* info.aliases is an object with one property each for only the
@@ -74,12 +76,15 @@ app.controller("DeviceController", ['$scope', '$http', function($scope, $http) {
               the RID of the child resource. This logic checks for property by RID
               and grabs the alias. */
               for (var j=0; j< children.length; j++) {
-                //console.log(children[j].rid,":", info.aliases[children[j].rid]);
+                console.log(children[j].rid,":", info.aliases[children[j].rid], ":", children[j].type);
                 var tempAlias = info.aliases[children[j].rid];
                 if (tempAlias) {
                   children[j].name = tempAlias[0];
                 } else {
                   children[j].name = "Resource with no alias";
+                }
+                if (children[j].type=="client") {
+                  storeDeviceCik(children[j].rid);
                 }
                 //Check to see if there are children of children
                 //Add aliases to the child's children wobject if so
@@ -89,9 +94,24 @@ app.controller("DeviceController", ['$scope', '$http', function($scope, $http) {
               }
               return children;
             }
-            return response.data.children;
+
+            function storeDeviceCik(childRid) {
+              console.log("storeDeviceCiks called");
+              return $http.get('rpc/getcik/'+childRid).then(function(response){
+                  if(response.status !== 200) {
+                      throw new Error('/rpc/getcik put call from storeDeviceCiks failed');
+                  } else if (!response.data.info) {
+                      throw new Error("RPC getcik error: ", response.status);
+                  }
+                  return ("cik stored for: "+childRid)
+                  console.log("cik stored for: "+childRid);
+                  });
+            }
         });
     };
+
+
+
     getDevices();
     $scope.deleteByRid=deleteByRid;
     $scope.getDevices=getDevices;

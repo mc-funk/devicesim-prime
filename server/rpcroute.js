@@ -10,14 +10,20 @@ var cookieParser = require('cookie-parser');
 //TODO: RPC call for get devices and their resources, store RIDs in DOM Data
 router.put('/resource/:parentrid/:rid/:dp', function(req, res, next) {
   console.log("write /resource called");
-  console.log("cik retrieved: ", thisCik);
+
   var thisRid = req.params.rid;
   var parentRid = req.params.parentrid;
-  if (req.session.deviceCik[parentRid]) {
-    var thisCik = req.session.deviceCik[parentRid];
+  var thisCik;
+  if (parentRid=="portal") {
+    thisCik = req.session.cik;
+  } else if (req.session.deviceCik[parentRid]) {
+    thisCik = req.session.deviceCik[parentRid];
   } else {
-    res.send("Error: deviceCik not stored");
+      res.send("Error: deviceCik not stored");
   }
+
+
+
   var thisDataPoint = req.params.dp;
   rpc.call(thisCik, 'write', [thisRid, thisDataPoint],
     function(err, rpcresponse, httpresponse) {
@@ -82,28 +88,27 @@ router.get('/info', function (req, res, next) {
   });
 });
 
-router.get('/getCik/:rid', function (req, res, next) {
-  console.log("/getCik/:rid called");
+router.get('/getcik/:rid', function (req, res, next) {
+  console.log("/getcik/:rid called");
   var thisCik = req.session.cik;
   var thisRid = req.params.rid;
-  console.log("cik retrieved: ", thisCik);
-  //{cik: thisCik}
+  console.log("rid retrieved: ", thisRid);
   rpc.call(thisCik, 'info', [thisRid, {"key": true}],
     function(err, rpcresponse, httpresponse) {
       if (err) {
-        console.log('INFO CALL ERR: ' + err);
+        console.log('KEY CALL ERR: ' + err);
         res.send(err);
       } else {
         if (rpcresponse[0].status === 'ok') {
-          console.log("info/:rid get result: ", rpcresponse[0].result);
+          console.log("info/:rid get result for "+ thisRid +": ", rpcresponse[0].result);
           //req.session.portalName = rpcresponse[0].result.description.name;
           //console.log("portalName set:" + req.session.portalName);
           if (!req.session.deviceCik) {
             req.session.deviceCik = {};
           }
           req.session.deviceCik[thisRid] = rpcresponse[0].result.key;
-          console.log("req.session.deviceCik: ", req.session.deviceCik)
-          res.send("device key saved");
+          console.log("req.session.deviceCik["+thisRid+"]: " + req.session.deviceCik[thisRid]);
+          res.send({"info": "device key saved"});
         } else {
           console.log('Bad status: ' + rpcresponse[0].status);
           req.session.portalName = null;

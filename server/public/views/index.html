@@ -24,7 +24,7 @@
             <div>&nbsp;</div>
         </div>
 
-        <div class="mainSub textArea col-md-7">
+        <div class="mainSub textArea col-md-10">
           <a class="noHover" name="authentication"><h2>Authentication</h2></a>
 
           <p>In order to connect with your device, please provide your portal CIK.<br>
@@ -37,20 +37,20 @@
           </form>
         </div>
 
-        <div id="deviceTest" class="deviceTest col-offset-2 col-md-7" style="display: none;">
+        <div id="deviceTest" class="deviceTest col-offset-2 col-md-12" style="display: none;">
           <a class="noHover" name="devices"><h2>Devices & Data</h2></a>
 
           <div ng-controller="DeviceController">
             <h3>Devices in Your Portal</h3>
-            <button ng-click="getDevices()" class="btn btn-warning btn-small">Refresh</button>
+            <button ng-click="getDevices()" id="deviceRefresh" class="btn btn-warning btn-sm">Refresh</button>
             <ul>
                 <li  ng-attr-id="{{device.rid}}" ng-repeat="device in devices">{{device.name}}
                   <span><button class="btn-xs btn-success btn" ng-show="device.type=='dataport'" ng-click="writeToDataport('portal', device.rid)">Quick Write</button>
-                  <small>({{device.type}}, rid: {{device.rid}})</small></span>
+                  <small>({{device.type}}, rid: {{device.rid}})</small></span>&nbsp;<span id="{{device.rid}}-status" class="resource-status"></span>
                   <ul>
                     <li ng-repeat="child in device.children" ng-attr-id="{{child.rid}}" >{{child.name}}
                       <button class="btn-xs btn-success btn" ng-show="child.type=='dataport'" ng-click="writeToDataport(device.rid, child.rid)">Quick Write</button>
-                      <small>({{child.type}}, rid: {{child.rid}})</small>
+                      <small>({{child.type}}, rid: {{child.rid}})</small>&nbsp;<span id="{{child.rid}}-status" class="resource-status"></span>
                     </li>
                   </ul>
                 </li>

@@ -19,7 +19,9 @@ $(document).ready(function() {
       console.log("submitCik");
       var cik = $("#cikInput").val();
       console.log("cik: ", cik);
+      clearAuth();
       setCik(cik);
+
     });
 
     // $('#submitUauth').on("click", function(){
@@ -64,6 +66,7 @@ $(document).ready(function() {
         console.log("post call success: ", post);
         //TODO: Use this information to update auth fields
         //data.cik, data.uauth, data.url, data.authType
+        $("#deviceTest").hide();
         updateAuthFields();
       },
       error: function(xhr, err){
@@ -87,6 +90,8 @@ $(document).ready(function() {
         //TODO: Use this information to update auth fields
         //data.cik, data.uauth, data.url, data.authType
         updateAuthFields();
+        //TODO: move jQuery functionality more into Angular and get rid of this janky fix
+        $("#deviceRefresh").click();
       },
       error: function(xhr, err){
         console.log("CIK post error: ", err);

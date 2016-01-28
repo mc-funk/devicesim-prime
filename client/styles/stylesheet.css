@@ -64,6 +64,12 @@ h5 {
 	font-style: italic;
 }
 
+.resource-status {
+	color: #4DA74D;
+	font-style: italic;
+	font-size: small;
+}
+
 p {
 	color: #2f2f2f;
 }

@@ -35,6 +35,7 @@ router.delete('/', function(req, res, next) {
   req.session.uauth = null;
   delete req.session.url;
   delete req.session.cik;
+  delete req.session.deviceCik;
   delete req.session.portalName;
   res.end("all auth deleted");
 })

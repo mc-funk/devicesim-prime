@@ -9,22 +9,24 @@ var cookieParser = require('cookie-parser');
 //RPC CALL: rpc.caoo(auth, procedure, arguments, callback)
 //TODO: RPC call for get devices and their resources, store RIDs in DOM Data
 router.put('/resource/:parentrid/:rid/:dp', function(req, res, next) {
-  console.log("write /resource called");
-
-  var thisRid = req.params.rid;
   var parentRid = req.params.parentrid;
+  var thisRid = req.params.rid;
+  console.log("write /resource called for parentrid ", parentRid, "thisRid", thisRid);
   var thisCik;
+  console.log("req.session in /resource:", req.session);
+  console.log("req.session.deviceCik[parentRid]: ", req.session.deviceCik[parentRid]);
   if (parentRid=="portal") {
     thisCik = req.session.cik;
+    console.log("thisCik set to portal CIK: ", thisCik);
   } else if (req.session.deviceCik[parentRid]) {
     thisCik = req.session.deviceCik[parentRid];
+    console.log("thisCik set: ", thisCik);
   } else {
-      res.send("Error: deviceCik not stored");
+    res.send("Error: deviceCik not stored");
   }
 
-
-
   var thisDataPoint = req.params.dp;
+  console.log("rpc.call(", thisCik, 'write', [thisRid, thisDataPoint], ")");
   rpc.call(thisCik, 'write', [thisRid, thisDataPoint],
     function(err, rpcresponse, httpresponse) {
       if (err) {
@@ -88,34 +90,46 @@ router.get('/info', function (req, res, next) {
   });
 });
 
-router.get('/getcik/:rid', function (req, res, next) {
-  console.log("/getcik/:rid called");
+router.post('/storeCik/', function (req, res, next) {
+  console.log("/storeCik called");
   var thisCik = req.session.cik;
-  var thisRid = req.params.rid;
-  console.log("rid retrieved: ", thisRid);
-  rpc.call(thisCik, 'info', [thisRid, {"key": true}],
-    function(err, rpcresponse, httpresponse) {
-      if (err) {
-        console.log('KEY CALL ERR: ' + err);
-        res.send(err);
-      } else {
-        if (rpcresponse[0].status === 'ok') {
-          console.log("info/:rid get result for "+ thisRid +": ", rpcresponse[0].result);
-          //req.session.portalName = rpcresponse[0].result.description.name;
-          //console.log("portalName set:" + req.session.portalName);
-          if (!req.session.deviceCik) {
-            req.session.deviceCik = {};
+  var ridArray = req.body.clientArray;
+  var promiseArray = [];
+  console.log("rids retrieved: ", ridArray);
+  for (var l = 0; l<ridArray.length; l++) {
+    promiseArray[l]= new Promise(function(resolve,reject) {
+      console.log("rpc.call("+thisCik+", 'info', ["+ridArray[l]+", {'key': true}], ...)");
+      rpc.call(thisCik, 'info', [ridArray[l], {"key": true}],
+        function(err, rpcresponse, httpresponse) {
+          if (err) {
+            console.log('KEY CALL ERR: ' + err);
+            reject(err);
+          } else {
+            if (rpcresponse[0].status === 'ok') {
+              console.log("info/:rid get result for "+ ridArray[l] +": ", rpcresponse[0].result);
+              resolve(rpcresponse[0].result.key);
+            } else {
+              console.log('Bad status: ' + rpcresponse[0].status);
+              reject("Bad status")
+            }
           }
-          req.session.deviceCik[thisRid] = rpcresponse[0].result.key;
-          console.log("req.session.deviceCik["+thisRid+"]: " + req.session.deviceCik[thisRid]);
-          res.send({"info": "device key saved"});
-        } else {
-          console.log('Bad status: ' + rpcresponse[0].status);
-          req.session.portalName = null;
-        }
+        });
+      });
+    }
+    Promise.all(promiseArray).then(function(result){
+      console.log("Promises finished! result: ", result);
+      var deviceCiks = {};
+      var thisProperty = "";
+      for (var m=0; m<result.length; m++) {
+        thisProperty = ridArray[m].toString();
+        deviceCiks[thisProperty] = result[m];
       }
+      console.log("deviceCiks: ", deviceCiks);
+      req.session.deviceCik = deviceCiks;
+      console.log('req.session after promises: ', req.session);
+      res.send(deviceCiks)
+    })
   });
-});
 
 /*
 var childArray = {}

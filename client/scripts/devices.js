@@ -8,40 +8,41 @@ app.controller("DeviceController", ['$scope', '$http', function($scope, $http) {
     $scope.childDevice = {};
     $scope.devices = [];
     //Create a function to retrieve cat information from server and redefine $scope.cats accordingly.
-    function deleteByRid(rid) {
-      console.log(rid);
-      var data = window.prompt("Enter the datapoint you would like to add below.");
-      if (data === null) {
-        console.log("CANCEL write for rid "+ rid);
-        return;
-      }
-      console.log("CONFIRM write for rid "+ rid +" data=" + data);
-      //DELETE CALL GOES HERE
-      return $http.put('rpc/resource/'+rid+"/"+data).then(function(response){
-          if(response.status !== 200) {
-              throw new Error('/rpc/resource put call from deleteByRid failed');
-          } else if (!response.data.info) {
-              throw new Error("RPC error: ", response.status);
-            }
-          console.log("resource put call successful for: "+rid);
-          });
-    }
+    // function deleteByRid(rid) {
+    //   console.log(rid);
+    //   var data = window.prompt("Enter the datapoint you would like to add below.");
+    //   if (data === null) {
+    //     console.log("CANCEL write for rid "+ rid);
+    //     return;
+    //   }
+    //   console.log("CONFIRM write for rid "+ rid +" data=" + data);
+    //   //DELETE CALL GOES HERE
+    //   return $http.put('rpc/resource/'+rid+"/"+data).then(function(response){
+    //       if(response.status !== 200) {
+    //           throw new Error('/rpc/resource put call from deleteByRid failed');
+    //       } else if (!response.data.info) {
+    //           throw new Error("RPC error: ", response.status);
+    //         }
+    //       console.log("resource put call successful for: "+rid);
+    //       });
+    // }
 
     function writeToDataport(DeviceRid, DataPortRid) {
-      var data = window.prompt("Enter the datapoint you would like to add below.");
-      if (data === null) {
+      var dataPoint = window.prompt("Enter the datapoint you would like to add below.");
+      if (dataPoint === null) {
         console.log("CANCEL write for rid "+ DataPortRid);
         return;
       }
-      console.log("CONFIRM write for rid "+ DataPortRid +" data=" + data);
+      console.log("CONFIRM write for rid "+ DataPortRid +" data=" + dataPoint);
       //DELETE CALL GOES HERE
-      return $http.put('rpc/resource/'+DeviceRid+"/"+DataPortRid+"/"+data).then(function(response){
+      return $http.put('rpc/resource/'+DeviceRid+"/"+DataPortRid+"/"+dataPoint).then(function(response){
           if(response.status !== 200) {
               throw new Error('/rpc/resource put call from deleteByRid failed');
           } else if (!response.data.info) {
               throw new Error("RPC error: ", response.status);
             }
           console.log("resource put call successful for: "+DataPortRid);
+          $('#'+DataPortRid+'-status').html("Recent value written: "+dataPoint)
           });
     }
 
@@ -60,8 +61,10 @@ app.controller("DeviceController", ['$scope', '$http', function($scope, $http) {
             $("#deviceTest").show();
             var children = response.data.children;
             var info = response.data.info;
+            var clientArray = [];
+            var childData = addAliases(children, info);
 
-            children = addAliases(children, info);
+            storeDeviceCik(clientArray);
 
             $scope.device = {};
             $scope.devices = children;
@@ -69,12 +72,14 @@ app.controller("DeviceController", ['$scope', '$http', function($scope, $http) {
 
             return response.data.children;
 
+            //TODO: refactor this function to a name that describes all functionality
             function addAliases(children, info) {
               //console.log("getAliases called:", children, info);
               /* info.aliases is an object with one property each for only the
-              child resources that have aliases. The name of each property is
+              child resources that have aliases. The name of each property isRPC getcik error
               the RID of the child resource. This logic checks for property by RID
               and grabs the alias. */
+
               for (var j=0; j< children.length; j++) {
                 console.log(children[j].rid,":", info.aliases[children[j].rid], ":", children[j].type);
                 var tempAlias = info.aliases[children[j].rid];
@@ -84,7 +89,8 @@ app.controller("DeviceController", ['$scope', '$http', function($scope, $http) {
                   children[j].name = "Resource with no alias";
                 }
                 if (children[j].type=="client") {
-                  storeDeviceCik(children[j].rid);
+                  console.log("children["+j+"]:" + children[j]);
+                  clientArray.push(children[j].rid);
                 }
                 //Check to see if there are children of children
                 //Add aliases to the child's children wobject if so
@@ -95,16 +101,22 @@ app.controller("DeviceController", ['$scope', '$http', function($scope, $http) {
               return children;
             }
 
-            function storeDeviceCik(childRid) {
+            function storeDeviceCik(clientArray) {
               console.log("storeDeviceCiks called");
-              return $http.get('rpc/getcik/'+childRid).then(function(response){
-                  if(response.status !== 200) {
-                      throw new Error('/rpc/getcik put call from storeDeviceCiks failed');
-                  } else if (!response.data.info) {
-                      throw new Error("RPC getcik error: ", response.status);
+              return $http({
+                  method: 'POST',
+                  url: 'rpc/storeCik/',
+                  data: {
+                    "clientArray": clientArray
                   }
-                  return ("cik stored for: "+childRid)
-                  console.log("cik stored for: "+childRid);
+                }).then(function(response){
+                    if(response.status !== 200) {
+                        throw new Error('/rpc/getcik put call from storeDeviceCiks failed');
+                    } else if (!response.data) {
+                        throw new Error("RPC getcik error: ", response.status);
+                    }
+                    return ("cik stored for: "+clientArray)
+                    console.log("cik stored for: "+clientArray);
                   });
             }
         });
@@ -113,7 +125,7 @@ app.controller("DeviceController", ['$scope', '$http', function($scope, $http) {
 
 
     getDevices();
-    $scope.deleteByRid=deleteByRid;
+    // $scope.deleteByRid=deleteByRid;
     $scope.getDevices=getDevices;
     $scope.writeToDataport=writeToDataport;
 

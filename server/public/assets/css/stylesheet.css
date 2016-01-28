@@ -65,9 +65,9 @@ h5 {
 }
 
 .resource-status {
-	font-color: #4DA74D;
+	color: #4DA74D;
 	font-style: italic;
-	font-size: small; 
+	font-size: small;
 }
 
 p {

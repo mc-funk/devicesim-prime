@@ -1,0 +1,242 @@
+body {
+	font-family: 'Open Sans', sans-serif;
+	color: #5C5D60;
+	font-size: 16px;
+	background-color: #5C5D60;
+}
+
+.container {
+	background-color: #ffffff;
+	padding-bottom: 20px;
+
+}
+
+.header {
+	 margin-left: 10px;
+	 margin-right: 10px;
+}
+
+a {
+	color: #D5E04D;
+}
+
+.noHover a:hover {
+	text-decoration: none;
+}
+
+.clickable:hover {
+	background-color: #D5E04D;
+}
+
+h1 {
+	color: #41C4DC;
+}
+
+h2 {
+	padding-bottom: 0;
+	color: #D5E04D;
+}
+
+h3 {
+	padding-top: 0;
+	font-style: italic;
+}
+
+h4 {
+	color: #41C4DC;
+}
+
+h5 {
+	padding-top: 3px;
+	color: #ffffff;
+}
+
+.white {
+	color: #ffffff;
+}
+
+.gold {
+	color: #D5E04D;
+}
+
+.warn-text {
+	color: #A91E27;
+	font-style: italic;
+}
+
+.resource-status {
+	color: #4DA74D;
+	font-style: italic;
+	font-size: small;
+}
+
+p {
+	color: #2f2f2f;
+}
+
+.row {
+	margin-bottom: 15px;
+}
+
+.header img {
+	margin-top: 15px;
+}
+
+.sidebar {
+	color: #ffffff;
+	background-color: #ADAEAD;
+	padding: 6px 6px 15px 6px;
+}
+
+
+.img-bordered {
+	border: 1px solid #bbbbbb;
+}
+
+.textArea {
+	padding-bottom: 10px;
+}
+
+.textArea h2 {
+	margin-top: 10px;
+}
+
+.socialBtn {
+	display: inline-block;
+	margin-left: 13px;
+	margin-top: 15px;
+}
+
+.socialBtn img {
+	margin: 0
+	margin-left: 4px;
+	margin-right: 4px;
+}
+
+.socialBtn img:hover {
+	opacity: 0.5;
+}
+
+.nav a {
+	color: #ffffff;
+}
+
+.currentNav {
+	background-color: #41C4DC;
+}
+
+.nav li a:hover, .nav li a:focus {
+	background-color: #41C4DC;
+}
+
+.nav ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+.nav li {
+	display: inline;
+	width: 120px;
+}
+
+.blue {
+	color: #6aa9d4;
+}
+
+.btn-success {
+	background-color: #4DA74D;
+}
+
+.btn-warning {
+	background-color: #FAD33A;
+}
+
+.btn-danger {
+	background-color: #A91E27;
+}
+.socialBtn {
+	text-align: center;
+}
+
+.gravatar {
+	margin-left: 10px;
+}
+
+.sidebar2 {
+	font-family: 'Open Sans', sans-serif;
+	border-left: 7px solid #fda703;
+	padding-left: 15px;
+}
+
+.sidebar2 h1 {
+	margin-bottom: 8px;
+}
+
+.sidebar2 ul {
+	list-style-type: circle;
+}
+
+.skillslist {
+	font-family: 'Open Sans', sans-serif;
+	padding-left: 15px;
+	padding-right:15px;
+	padding-bottom: 20px;
+}
+
+.skillslist ul {
+	padding: 0;
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+.skillslist li {
+	display: inline;
+	padding-top: 0;
+	padding-bottom: 0;
+}
+
+.skillslist h1 {
+	margin-top: 0;
+	margin-bottom: 8px;
+}
+
+.section .mainContainer h3 {
+	margin-top: 2px;
+	margin-bottom: 0;
+	padding: 0;
+
+}
+
+.section .main h2 {
+	margin: 0;
+	padding: 0;
+
+}
+
+.section .main p {
+	margin-top: 4px;
+	padding: 0;
+
+}
+
+.footer {
+	margin-top: 15px;
+	padding-top: 30px;
+	padding-bottom: 15px;
+	text-align: center;
+	background-color: #fda703;
+}
+
+.footer p {
+	color: #ffffff;
+	padding-top: 0;
+	margin-top: 0;
+}
+
+/*
+.sidebar {
+	bottom: 0;
+	top: 0;
+	position: absolute;
+}*/

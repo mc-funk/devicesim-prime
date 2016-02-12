@@ -11,22 +11,22 @@ var cookieParser = require('cookie-parser');
 router.put('/resource/:parentrid/:rid/:dp', function(req, res, next) {
   var parentRid = req.params.parentrid;
   var thisRid = req.params.rid;
+  var thisDataPoint = req.params.dp;
+
   console.log("write /resource called for parentrid ", parentRid, "thisRid", thisRid);
   var thisCik;
-  console.log("req.session in /resource:", req.session);
+  //console.log("req.session in /resource:", req.session);
   console.log("req.session.deviceCik[parentRid]: ", req.session.deviceCik[parentRid]);
   if (parentRid=="portal") {
     thisCik = req.session.cik;
-    console.log("thisCik set to portal CIK: ", thisCik);
+    //console.log("thisCik set to portal CIK: ", thisCik);
   } else if (req.session.deviceCik[parentRid]) {
     thisCik = req.session.deviceCik[parentRid];
-    console.log("thisCik set: ", thisCik);
+    //console.log("thisCik set: ", thisCik);
   } else {
     res.send("Error: deviceCik not stored");
   }
-
-  var thisDataPoint = req.params.dp;
-  console.log("rpc.call(", thisCik, 'write', [thisRid, thisDataPoint], ")");
+  //console.log("rpc.call(", thisCik, 'write', [thisRid, thisDataPoint], ")");
   rpc.call(thisCik, 'write', [thisRid, thisDataPoint],
     function(err, rpcresponse, httpresponse) {
       if (err) {

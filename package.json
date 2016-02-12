@@ -12,14 +12,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/mc-funk/prime_solo_nd_01.git"
+    "url": "https://github.com/mc-funk/devicesim-prime.git"
   },
   "author": "Michelle C. Funk",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/mc-funk/prime_solo_nd_01/issues"
+    "url": "https://github.com/mc-funk/devicesim-prime/issues"
   },
-  "homepage": "https://github.com/mc-funk/prime_solo_nd_01",
+  "homepage": "devicesim-prime.heroku.com",
   "dependencies": {
     "angular": "^1.4.9",
     "body-parser": "^1.14.2",

@@ -1,17 +1,16 @@
 main:
   build: .
   ports:
-  - 80:5000
-  - 443:5000
+    - 80:5000
+    - 443:5000
   environment:
     - MONGO_URL
   links:
     - mongo
-
 mongo:
-  image: "mongo"
+  image: mongo
   environment:
-      - "LINK_SCHEME=mongo"
-      - "LINK_PATH=/sessions-dev"
+    - LINK_SCHEME=mongodb
+    - LINK_PATH=/sessions-dev
   ports:
     - 27017:27017

@@ -15,12 +15,14 @@ var rpcRoute = require('./rpcroute');
 //var hash = require("./gravatar");
 
 app.set('port', (process.env.PORT || 5000)); //Heroku sets env PORT to 5000
-
+console.log("Port set, setting mongoose URI");
 // set the 'dbUrl' to the mongodb url that corresponds to the
 // environment we are in
 app.set('dbUrl', process.env.MONGOLAB_URI || config.db[app.settings.env]);
+console.log("mongo URI set, connecting...")
 // connect mongoose to the mongo dbUrl
 mongoose.connect(app.get('dbUrl'));
+console.log("app.get complete");
 //...
 
 app.use(bodyParser.json());
